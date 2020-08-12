@@ -32,14 +32,39 @@ func (n *Node) Insert(k int) {
 // Search will take in a key value
 // and RETURN true if there is a node with that value
 func (n *Node) Search(k int) bool {
+	if n == nil {
+		return false
+	}
 
+	if n.Key < k {
+		//move right
+		return n.Right.Search(k)
+	} else if n.Key > k {
+		//move left
+		return n.Left.Search(k)
+	}
+
+	return true
 }
 
 func main() {
 	tree := &Node{Key: 100}
-	fmt.Println(treeRoot)
-	tree.Insert(200)
-	tree.Insert(300)
 	fmt.Println(tree)
+	//tree.Insert(200)
+	//tree.Insert(300)
+	//fmt.Println(tree)
+
+	tree.Insert(52)
+	tree.Insert(203)
+	tree.Insert(19)
+	tree.Insert(76)
+	tree.Insert(150)
+	tree.Insert(310)
+	tree.Insert(7)
+	tree.Insert(24)
+	tree.Insert(88)
+	tree.Insert(276)
+
+	fmt.Println(tree.Search(76))
 
 }
