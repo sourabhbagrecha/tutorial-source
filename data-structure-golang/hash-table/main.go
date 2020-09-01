@@ -6,7 +6,7 @@ const ArraySize = 7
 
 //HashTable will
 type HashTable struct {
-	array [ArraySize]*bucket
+	keyArray [ArraySize]*bucket
 }
 
 // bucket will
@@ -29,40 +29,41 @@ func hash(s string) int {
 	return sum % ArraySize
 }
 
+//Init will create a hash table and initialize the array with empty buckets
+func Init() *HashTable {
+	h := &HashTable{}
+	for i := range h.keyArray {
+		h.keyArray[i] = &bucket{}
+	}
+	return h
+}
+
 // Insert will take in a key and insert it in the hash table
 func (h *HashTable) Insert(k string) {
-	// go to that array index
 	index := hash(k)
-	// insert the key in the bucket
-	if h.array[index] == nil {
-		h.array[index] = &bucket{}
-	}
-	h.array[index].insert(k)
+	h.keyArray[index].insert(k)
 }
 
 // Delete will take in a key and delete it from the hash table
 func (h *HashTable) Delete(k string) {
 	index := hash(k)
-	h.array[index].delete(k)
+	h.keyArray[index].delete(k)
 }
 
 // Search will take in a key and return true if that key exists in the hash table
 func (h *HashTable) Search(k string) bool {
 	index := hash(k)
-	return h.array[index].search(k)
+	return h.keyArray[index].search(k)
 }
 
 func (b *bucket) insert(k string) {
-	// create bucketNode to insert
 	newNode := &bucketNode{data: k}
-	// insert that bucketNode
-	if b.head == nil {
-		b.head = newNode
-		fmt.Println("node added", newNode.data)
-	} else {
+	if !b.search(k) {
 		newNode.next = b.head
 		b.head = newNode
 		fmt.Println("node added", newNode.data)
+	} else {
+		fmt.Println(k, "is not added because it is already in the list")
 	}
 }
 
@@ -84,7 +85,7 @@ func (b *bucket) delete(k string) {
 
 func (b *bucket) search(k string) bool {
 	currentNode := b.head
-	for currentNode.next != nil {
+	for currentNode != nil {
 		if currentNode.data == k {
 			return true
 		}
@@ -94,8 +95,11 @@ func (b *bucket) search(k string) bool {
 }
 
 func main() {
-	hashTable := &HashTable{}
+	hashTable := Init()
+
 	hashTable.Insert("RANDY")
 	hashTable.Insert("ERIC")
-	fmt.Println(hashTable.Search("rt"))
+	hashTable.Insert("KENNY")
+	hashTable.Insert("KENNY")
+	fmt.Println(hashTable.Search("KENNY"))
 }
