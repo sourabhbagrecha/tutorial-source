@@ -10,7 +10,6 @@ type node struct {
 type linkedList struct {
 	head   *node
 	length int
-	length int
 }
 
 func (l *linkedList) prepend(n *node) {
