@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 )
 
@@ -89,9 +90,10 @@ func main() {
 	for _, v := range buildHeap {
 		m.Insert(v)
 	}
-
+	fmt.Println(m)
 	for i := 0; i < 5; i++ {
 		m.Extract()
+		fmt.Println(m)
 	}
 
 }
