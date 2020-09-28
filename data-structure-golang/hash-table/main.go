@@ -77,6 +77,7 @@ func (b *bucket) delete(k string) {
 		if previousNode.next.key == k {
 			//delete
 			previousNode.next = previousNode.next.next
+			return
 		}
 		previousNode = previousNode.next
 	}
@@ -104,20 +105,15 @@ func main() {
 	hashTable := Init()
 	list := []string{
 		"ERIC",
-		"KENNY",
-		"KYLE",
 		"STAN",
 		"RANDY",
-		"BUTTERS",
-		"TOKEN",
+		"KYLE",
 	}
 
 	for _, v := range list {
 		hashTable.Insert(v)
 	}
 
-	hashTable.Delete("STAN")
-	fmt.Println("STAN", hashTable.Search("STAN"))
-	fmt.Println("KENNY", hashTable.Search("KENNY"))
+	hashTable.Delete("ERIC")
 
 }
